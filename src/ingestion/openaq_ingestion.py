@@ -14,8 +14,12 @@ HEADERS = {
     'Accept': "application/json"
 }
 
-def load_data(data):
-    data_base = TinyDB('./data/raw/data_base.json')
+def load_countries(data):
+    data_base = TinyDB('./data/raw/data_countries.json')
+    data_base.insert(data)
+
+def load_measurements(data):
+    data_base = TinyDB('./data/raw/data_measurements.json')
     data_base.insert(data)
 
 def get_countries():
@@ -23,9 +27,18 @@ def get_countries():
     response = requests.get(url, headers=HEADERS)
     return response.json()
 
+def get_measurements(sensor_id: int):
+    url = f"{BASE_URL}/sensors/{sensor_id}/measurements"
+    response = requests.get(url, headers=HEADERS)
+    return response.json()
+
+
 if __name__ == "__main__":
     data_countries = get_countries()
-    load_data(data_countries)
+    data_measurements = get_measurements(3917)
+    load_countries(data_countries)
+    load_measurements(data_measurements)
+
 
 
 
