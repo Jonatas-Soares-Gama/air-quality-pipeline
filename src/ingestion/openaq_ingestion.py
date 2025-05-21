@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import requests
 from tinydb import TinyDB
-import pandas as pd
+
 
 load_dotenv('.venv/.env')
 
@@ -33,17 +33,17 @@ def get_locations():
     return response.json()
 
 
-def get_measurements(sensor_id: int):
-    url = f"{BASE_URL}/sensors/{sensor_id}/measurements"
+def get_measurements(sensor_id):
+    url = f"{BASE_URL}/sensors/{sensor_id}/measurements/daily"
     response = requests.get(url, headers=HEADERS)
     return response.json()
+
 
 
 if __name__ == "__main__":
     data_countries = get_countries()
     data_measurements = get_measurements(3917)
-    load_countries(data_countries)
-    load_measurements(data_measurements)
+    print(data_measurements)
 
 
 
