@@ -27,6 +27,12 @@ def get_countries():
     response = requests.get(url, headers=HEADERS)
     return response.json()
 
+def get_locations():
+    url = f"{BASE_URL}/locations"
+    response = requests.get(url, headers=HEADERS)
+    return response.json()
+
+
 def get_measurements(sensor_id: int):
     url = f"{BASE_URL}/sensors/{sensor_id}/measurements"
     response = requests.get(url, headers=HEADERS)
