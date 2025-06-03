@@ -1,8 +1,9 @@
 import pandas as pd
-from openaq_ingestion import get_countries, get_locations, get_measurements
+from datetime import datetime
+from dateutil.parser import parse
+from openaq_ingestion import get_locations, get_measurements
 
 
-countries = get_countries()
 locations = get_locations()
 
 sensor_list_by_countries = []
@@ -28,19 +29,24 @@ def filter_values_by_sensor():
             value = measurement.get('value')
             parameter_id = measurement.get('parameter').get('id') 
             parameter_name = measurement.get('parameter').get('name')
+            units = measurement.get('parameter').get('units')
             date_time_utc = measurement.get('period', {}).get('datetimeFrom', {}).get('utc')
+            date_obj = parse(date_time_utc)
+            date = date_obj.strftime('%Y-%m-%d')
             values_by_sensor.append({
                 'sensor_id': sensor_id,
                 'parameter_id': parameter_id,
                 'parameter_name': parameter_name,
                 'value': value,
-                'date_time_utc': date_time_utc
+                'units': units,
+                'date': date
             })
 
     return values_by_sensor
     
 values_by_sensor = filter_values_by_sensor()
 df_values_by_sensor = pd.DataFrame(values_by_sensor)
+print(df_values_by_sensor.head())
 
 df_sensors_by_countries.to_csv('./data/raw/sensors_by_countries.csv', index=False, encoding='utf-8', sep=';')
 df_values_by_sensor.to_csv('./data/raw/values_by_sensor.csv', index=False, encoding='utf-8', sep=';')
