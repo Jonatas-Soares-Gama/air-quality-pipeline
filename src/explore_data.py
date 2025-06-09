@@ -46,7 +46,6 @@ def filter_values_by_sensor():
     
 values_by_sensor = filter_values_by_sensor()
 df_values_by_sensor = pd.DataFrame(values_by_sensor)
-print(df_values_by_sensor.head())
 
 df_sensors_by_countries.to_csv('./data/raw/sensors_by_countries.csv', index=False, encoding='utf-8', sep=';')
 df_values_by_sensor.to_csv('./data/raw/values_by_sensor.csv', index=False, encoding='utf-8', sep=';')

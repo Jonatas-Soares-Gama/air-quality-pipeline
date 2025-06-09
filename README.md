@@ -7,7 +7,7 @@
 ## English
 
 ### 🌟 Project Overview
-This project is a **data pipeline** designed to collect, process, and analyze air quality data from the [OpenAQ](https://openaq.org/) platform. The pipeline currently focuses on gathering sensor data from various locations and countries, with plans to expand its capabilities using **Apache Airflow** and cloud database solutions.
+This project is a **data pipeline** designed to collect, process, and analyze air quality data from the [OpenAQ](https://openaq.org/) platform. The pipeline focuses on gathering sensor data from various locations and countries, using **Apache Airflow** for workflow orchestration and data processing.
 
 ---
 
@@ -16,6 +16,7 @@ This project is a **data pipeline** designed to collect, process, and analyze ai
 - 🌍 Collection of sensor information by country
 - 📊 Measurement data collection for each sensor
 - 💾 Data storage in CSV format
+- 🔄 Automated data pipeline with Apache Airflow
 - 🔎 Basic data exploration capabilities
 
 ---
@@ -26,8 +27,11 @@ This project is a **data pipeline** designed to collect, process, and analyze ai
 air_quality_pipeline/
 ├── data/
 │   └── raw/              # Raw data storage
+├── dags/                 # Airflow DAGs
+│   └── extract.py        # Data extraction and transformation DAG
 ├── src/
-│   └── ingestion/        # Data ingestion scripts
+│   ├── ingestion/        # Data ingestion scripts
+│   └── explore_data.py   # Data exploration utilities
 ├── notebooks/            # Jupyter notebooks for analysis
 └── .venv/               # Virtual environment
 ```
@@ -51,21 +55,41 @@ air_quality_pipeline/
     OPENAQ_API_KEY=your_api_key_here
     ```
 
+4. **Configure Airflow:**
+    ```
+    export AIRFLOW_HOME=~/airflow
+    airflow db init
+    airflow users create \
+        --username admin \
+        --firstname Admin \
+        --lastname User \
+        --role Admin \
+        --email admin@example.com \
+        --password admin
+    ```
+
+5. **Start Airflow services:**
+    ```
+    airflow webserver -p 8080
+    airflow scheduler
+    ```
+
 ---
 
 ### 🌱 Future Enhancements
-- ⏳ Integration with Apache Airflow for workflow orchestration
 - ☁️ Cloud database implementation for scalable data storage
 - 🧠 Advanced data processing and analytics
 - 🛰️ Real-time monitoring capabilities
 - 📈 Data visualization dashboard
+- 🔍 Data quality monitoring and validation
+- 📊 Advanced analytics and reporting
 
 ---
 
 ## Português
 
 ### 🌟 Visão Geral do Projeto
-Este projeto é um **pipeline de dados** projetado para coletar, processar e analisar dados de qualidade do ar da plataforma [OpenAQ](https://openaq.org/). Atualmente, o pipeline foca na coleta de dados de sensores de várias localidades e países, com planos de expansão para uso de **Apache Airflow** e soluções de banco de dados em nuvem.
+Este projeto é um **pipeline de dados** projetado para coletar, processar e analisar dados de qualidade do ar da plataforma [OpenAQ](https://openaq.org/). O pipeline foca na coleta de dados de sensores de várias localidades e países, utilizando **Apache Airflow** para orquestração de workflows e processamento de dados.
 
 ---
 
@@ -74,6 +98,7 @@ Este projeto é um **pipeline de dados** projetado para coletar, processar e ana
 - 🌍 Coleta de informações de sensores por país
 - 📊 Coleta de dados de medição para cada sensor
 - 💾 Armazenamento de dados em formato CSV
+- 🔄 Pipeline de dados automatizado com Apache Airflow
 - 🔎 Capacidades básicas de exploração de dados
 
 ---
@@ -84,12 +109,14 @@ Este projeto é um **pipeline de dados** projetado para coletar, processar e ana
 air_quality_pipeline/
 ├── data/
 │   └── raw/              # Armazenamento de dados brutos
+├── dags/                 # DAGs do Airflow
+│   └── extract.py        # DAG de extração e transformação de dados
 ├── src/
-│   └── ingestion/        # Scripts de ingestão de dados
+│   ├── ingestion/        # Scripts de ingestão de dados
+│   └── explore_data.py   # Utilitários de exploração de dados
 ├── notebooks/            # Notebooks Jupyter para análise
 └── .venv/               # Ambiente virtual
 ```
-
 
 ---
 
@@ -111,14 +138,34 @@ air_quality_pipeline/
     OPENAQ_API_KEY=sua_chave_api_aqui
     ```
 
+4. **Configurar o Airflow:**
+    ```
+    export AIRFLOW_HOME=~/airflow
+    airflow db init
+    airflow users create \
+        --username admin \
+        --firstname Admin \
+        --lastname User \
+        --role Admin \
+        --email admin@example.com \
+        --password admin
+    ```
+
+5. **Iniciar serviços do Airflow:**
+    ```
+    airflow webserver -p 8080
+    airflow scheduler
+    ```
+
 ---
 
 ### 🌱 Melhorias Futuras
-- ⏳ Integração com Apache Airflow para orquestração de workflows
 - ☁️ Implementação de banco de dados em nuvem para armazenamento escalável
 - 🧠 Processamento avançado de dados e análises
 - 🛰️ Capacidades de monitoramento em tempo real
 - 📈 Dashboard de visualização de dados
+- 🔍 Monitoramento e validação de qualidade dos dados
+- 📊 Análises avançadas e relatórios
 
 ---
 

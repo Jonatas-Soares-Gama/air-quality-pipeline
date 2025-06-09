@@ -1,8 +1,6 @@
 import os
 from dotenv import load_dotenv
 import requests
-from tinydb import TinyDB
-
 
 load_dotenv('.venv/.env')
 
@@ -14,13 +12,6 @@ HEADERS = {
     'Accept': "application/json"
 }
 
-def load_countries(data):
-    data_base = TinyDB('./data/raw/data_countries.json')
-    data_base.insert(data)
-
-def load_measurements(data):
-    data_base = TinyDB('./data/raw/data_measurements.json')
-    data_base.insert(data)
 
 def get_countries():
     url = f"{BASE_URL}/countries"
