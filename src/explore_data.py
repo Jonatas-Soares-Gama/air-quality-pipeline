@@ -2,15 +2,15 @@ import pandas as pd
 import time
 from datetime import datetime
 from dateutil.parser import parse
-from openaq_ingestion import get_locations, get_measurements
+from src.openaq_ingestion import get_locations, get_measurements
 
 MEASUREMENT_DELAY = 3
 
-locations = get_locations()
 
-sensor_list_by_countries = []
-def filter_sensors_location():
-    for item in locations.get('results', []):
+
+def filter_sensors_location(locations_data):
+    sensor_list_by_countries = []
+    for item in locations_data.get('results', []):
         country_name = item.get('country', {}).get('name')
         for sensor in item.get('sensors', []):
             sensor_list_by_countries.append({
@@ -20,11 +20,14 @@ def filter_sensors_location():
             })
     return sensor_list_by_countries
 
-sensor_list_by_countries = filter_sensors_location()
-df_sensors_by_countries = pd.DataFrame(sensor_list_by_countries)
+def create_sensors_by_countries_csv(sensor_list_by_countries):
+    df_sensors_by_countries = pd.DataFrame(sensor_list_by_countries)
+    df_sensors_by_countries.to_csv('./data/raw/sensors_by_countries.csv', index=False, encoding='utf-8', sep=';')
+    return df_sensors_by_countries
+
 
 values_by_sensor = []
-def filter_values_by_sensor():
+def filter_values_by_sensor(df_sensors_by_countries):
     for sensor_id in df_sensors_by_countries['sensor_id']: # for que passa por cada sensor_id da lista de sensores por país
         measurements = get_measurements(sensor_id) # pega as medidas do sensor
         for measurement in measurements.get('results', []): # for que passa por cada medida do sensor
@@ -46,12 +49,13 @@ def filter_values_by_sensor():
         time.sleep(MEASUREMENT_DELAY)
 
     return values_by_sensor
-    
-values_by_sensor = filter_values_by_sensor()
-df_values_by_sensor = pd.DataFrame(values_by_sensor)
 
-df_sensors_by_countries.to_csv('./data/raw/sensors_by_countries.csv', index=False, encoding='utf-8', sep=';')
-df_values_by_sensor.to_csv('./data/raw/values_by_sensor.csv', index=False, encoding='utf-8', sep=';')
+def create_values_by_sensor_csv():
+    values_by_sensor = filter_values_by_sensor()
+    df_values_by_sensor = pd.DataFrame(values_by_sensor)
+    df_values_by_sensor.to_csv('./data/raw/values_by_sensor.csv', index=False, encoding='utf-8', sep=';')
+    return df_values_by_sensor
+
 
 
 
