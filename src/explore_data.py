@@ -1,8 +1,10 @@
 import pandas as pd
+import time
 from datetime import datetime
 from dateutil.parser import parse
 from openaq_ingestion import get_locations, get_measurements
 
+MEASUREMENT_DELAY = 3
 
 locations = get_locations()
 
@@ -41,6 +43,7 @@ def filter_values_by_sensor():
                 'units': units,
                 'date': date
             })
+        time.sleep(MEASUREMENT_DELAY)
 
     return values_by_sensor
     
