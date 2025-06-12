@@ -1,8 +1,9 @@
 import pandas as pd
 import time
+import os
 from datetime import datetime
 from dateutil.parser import parse
-from src.openaq_ingestion import get_locations, get_measurements
+from src.openaq_ingestion import get_measurements
 
 MEASUREMENT_DELAY = 3
 
@@ -22,7 +23,15 @@ def filter_sensors_location(locations_data):
 
 def create_sensors_by_countries_csv(sensor_list_by_countries):
     df_sensors_by_countries = pd.DataFrame(sensor_list_by_countries)
-    df_sensors_by_countries.to_csv('./data/raw/sensors_by_countries.csv', index=False, encoding='utf-8', sep=';')
+    
+    output_dir = os.getenv("MY_DATA_DIR", "/usr/local/airflow/data/raw")
+    print(output_dir)
+    
+    os.makedirs(output_dir, exist_ok=True)
+    
+    output_file = os.path.join(output_dir, 'sensors_by_countries.csv')
+    
+    df_sensors_by_countries.to_csv(output_file, index=False, encoding='utf-8', sep=';')
     return df_sensors_by_countries
 
 
