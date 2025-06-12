@@ -25,16 +25,25 @@ This project is a **data pipeline** designed to collect, process, and analyze ai
 
 ```
 air_quality_pipeline/
+├── .astro/              # Astronomer configuration
+├── config/             # Configuration files
 ├── data/
-│   └── raw/              # Raw data storage
-├── dags/                 # Airflow DAGs
-│   └── extract.py        # Data extraction and transformation DAG
+│   └── raw/           # Raw data storage
+├── dags/              # Airflow DAGs
+│   └── extract.py     # Data extraction and transformation DAG
+├── include/           # Additional Airflow files
+├── plugins/           # Custom Airflow plugins
 ├── src/
-│   ├── ingestion/        # Data ingestion scripts
-│   └── explore_data.py   # Data exploration utilities
-├── notebooks/            # Jupyter notebooks for analysis
-└── .venv/               # Virtual environment
+│   ├── ingestion/     # Data ingestion scripts
+│   └── explore_data.py # Data exploration utilities
+├── tests/             # Test files
+├── notebooks/         # Jupyter notebooks for analysis
+├── .venv/            # Virtual environment
+├── airflow_settings.yaml # Airflow configuration
+├── Dockerfile        # Container configuration
+└── requirements.txt  # Python dependencies
 ```
+
 ---
 
 ### ⚙️ Setup and Installation
@@ -74,6 +83,12 @@ air_quality_pipeline/
     airflow scheduler
     ```
 
+6. **Docker Setup (Optional):**
+    The project includes Docker support for containerized deployment. To use Docker:
+    ```
+    docker build -t air-quality-pipeline .
+    ```
+
 ---
 
 ### 🌱 Future Enhancements
@@ -107,15 +122,23 @@ Este projeto é um **pipeline de dados** projetado para coletar, processar e ana
 
 ```
 air_quality_pipeline/
+├── .astro/              # Configuração do Astronomer
+├── config/             # Arquivos de configuração
 ├── data/
-│   └── raw/              # Armazenamento de dados brutos
-├── dags/                 # DAGs do Airflow
-│   └── extract.py        # DAG de extração e transformação de dados
+│   └── raw/           # Armazenamento de dados brutos
+├── dags/              # DAGs do Airflow
+│   └── extract.py     # DAG de extração e transformação de dados
+├── include/           # Arquivos adicionais do Airflow
+├── plugins/           # Plugins personalizados do Airflow
 ├── src/
-│   ├── ingestion/        # Scripts de ingestão de dados
-│   └── explore_data.py   # Utilitários de exploração de dados
-├── notebooks/            # Notebooks Jupyter para análise
-└── .venv/               # Ambiente virtual
+│   ├── ingestion/     # Scripts de ingestão de dados
+│   └── explore_data.py # Utilitários de exploração de dados
+├── tests/             # Arquivos de teste
+├── notebooks/         # Notebooks Jupyter para análise
+├── .venv/            # Ambiente virtual
+├── airflow_settings.yaml # Configuração do Airflow
+├── Dockerfile        # Configuração do container
+└── requirements.txt  # Dependências Python
 ```
 
 ---
@@ -155,6 +178,12 @@ air_quality_pipeline/
     ```
     airflow webserver -p 8080
     airflow scheduler
+    ```
+
+6. **Configuração Docker (Opcional):**
+    O projeto inclui suporte a Docker para implantação containerizada. Para usar Docker:
+    ```
+    docker build -t air-quality-pipeline .
     ```
 
 ---
