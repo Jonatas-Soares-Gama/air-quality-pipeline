@@ -5,8 +5,6 @@ from datetime import datetime
 from dateutil.parser import parse
 from src.openaq_ingestion import get_measurements
 
-MEASUREMENT_DELAY = 3
-
 
 
 def filter_sensors_location(locations_data):
@@ -28,7 +26,6 @@ def create_sensors_by_countries_csv(sensor_list_by_countries):
     print(output_dir)
     
     os.makedirs(output_dir, exist_ok=True)
-    
     output_file = os.path.join(output_dir, 'sensors_by_countries.csv')
     
     df_sensors_by_countries.to_csv(output_file, index=False, encoding='utf-8', sep=';')
@@ -55,14 +52,19 @@ def filter_values_by_sensor(df_sensors_by_countries):
                 'units': units,
                 'date': date
             })
-        time.sleep(MEASUREMENT_DELAY)
 
     return values_by_sensor
 
-def create_values_by_sensor_csv():
-    values_by_sensor = filter_values_by_sensor()
+def create_values_by_sensor_csv(values_by_sensor):
     df_values_by_sensor = pd.DataFrame(values_by_sensor)
-    df_values_by_sensor.to_csv('./data/raw/values_by_sensor.csv', index=False, encoding='utf-8', sep=';')
+    print(df_values_by_sensor)
+    output_dir = os.getenv("MY_DATA_DIR", "/usr/local/airflow/data/raw")
+    print(output_dir)
+    
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, 'values_by_sensor.csv')
+    
+    df_values_by_sensor.to_csv(output_file, index=False, encoding='utf-8', sep=';')
     return df_values_by_sensor
 
 
