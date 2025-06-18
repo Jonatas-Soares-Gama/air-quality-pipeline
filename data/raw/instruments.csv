@@ -1,0 +1,14 @@
+instrument_id;instrument_name;instrument_official;instrument_manufacturer_id;instrument_manyfacturer_name
+1;N/A;False;1;OpenAQ admin
+2;Government Monitor;True;4;Unknown Governmental Organization
+4;Clarity Sensor;False;9;Clarity
+5;HabitatMap Sensor;False;11;HabitatMap
+6;Senstate Sensor;False;10;Senstate
+7;AirGradient Sensor;False;12;AirGradient
+9;BEACO2N Sensor;False;13;University of California, Berkeley
+10;RAMP Sensor;False;14;Carnegie Mellon University
+11;Aerosol Black Carbon Detector (ABCD);False;13;University of California, Berkeley
+13;AIO 2;True;5020;MetOne
+14;BAM 1020;True;5020;MetOne
+15;Serinus 30;True;5022;Ecotech
+17;AirVisual sensor;False;11957;IQAir

@@ -27,6 +27,10 @@ def get_countries():
     url = f"{BASE_URL}/countries"
     return make_api_request(url)
 
+def get_instruments():
+     url = f"{BASE_URL}/instruments"
+     return make_api_request(url)
+
 def get_locations():
     url = f"{BASE_URL}/locations"
     return make_api_request(url)

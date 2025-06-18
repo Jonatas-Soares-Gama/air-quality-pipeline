@@ -1,7 +1,5 @@
 import pandas as pd
-import time
 import os
-from datetime import datetime
 from dateutil.parser import parse
 from src.openaq_ingestion import get_measurements
 
@@ -57,15 +55,46 @@ def filter_values_by_sensor(df_sensors_by_countries):
 
 def create_values_by_sensor_csv(values_by_sensor):
     df_values_by_sensor = pd.DataFrame(values_by_sensor)
-    print(df_values_by_sensor)
+
     output_dir = os.getenv("MY_DATA_DIR", "/usr/local/airflow/data/raw")
-    print(output_dir)
+
     
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, 'values_by_sensor.csv')
     
     df_values_by_sensor.to_csv(output_file, index=False, encoding='utf-8', sep=';')
     return df_values_by_sensor
+
+def filter_instruments(instruments_data):
+    instruments_list = []
+    for instrument in instruments_data.get('results', []):
+        instrument_id = instrument.get('id')
+        instrument_name = instrument.get('name')
+        instrument_official = instrument.get('isMonitor')
+        instrument_manufacturer_id = instrument.get('manufacturer', {}).get('id')
+        instrument_manufacturer_name = instrument.get('manufacturer', {}).get('name')
+        instruments_list.append({
+            'instrument_id': instrument_id,
+            'instrument_name': instrument_name,
+            'instrument_official': instrument_official,
+            'instrument_manufacturer_id': instrument_manufacturer_id,
+            'instrument_manyfacturer_name': instrument_manufacturer_name
+        })
+    return instruments_list
+
+def create_instruments_path(instruments_list):
+    df_instruments = pd.DataFrame(instruments_list)
+
+    output_dir = os.getenv("MY_DATA_DIR", "/usr/local/airflow/data/raw")
+    os.makedirs(output_dir, exist_ok=True)
+
+    output_file = os.path.join(output_dir, 'instruments.csv')
+
+    df_instruments.to_csv(output_file, index=False, encoding='utf-8', sep=';')
+    df_instruments.to_json(output_file.replace('.csv', '.json'), orient='records', lines=True)
+    return df_instruments
+
+
 
 
 
